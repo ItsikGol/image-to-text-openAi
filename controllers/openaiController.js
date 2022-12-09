@@ -28,14 +28,14 @@ const generateImage1 = async (req, res)=>{
 const generateImage = async (req, res) => {
   
   let { prompt, size } = req.body;
- // const { text } = await translate(prompt, { to: 'en' });
+  const { text } = await translate(prompt, { to: 'en' });
 
   const imageSize =
     size === 'small' ? '256x256' : size === 'medium' ? '512x512' : '1024x1024';
 
   try {
     const response = await openai.createImage({
-      prompt,//:text,
+      prompt:text,
       n: 1,
       size: imageSize,
     });
@@ -45,7 +45,7 @@ const generateImage = async (req, res) => {
     res.status(200).json({
       success: true,
       data: imageUrl,
-     // text
+      text
     });
   } catch (error) {
     if (error.response) {
