@@ -6,17 +6,16 @@ function onSubmit(e) {
   document.querySelector('#text-tr').textContent ='';
 
   const prompt = document.querySelector('#prompt').value;
-  const size = document.querySelector('#size').value;
 
   if (prompt === '') {
     alert('Please add some text');
     return;
   }
 
-  generateImageRequest(prompt, size);
+  generateImageRequest(prompt);
 }
 
-async function generateImageRequest(prompt, size) {
+async function generateImageRequest(prompt) {
   try {
     showSpinner();
 
@@ -25,10 +24,7 @@ async function generateImageRequest(prompt, size) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        prompt,
-        size,
-      }),
+      body: JSON.stringify({ prompt }),
     });
 
     if (!response.ok) {
@@ -47,11 +43,11 @@ async function generateImageRequest(prompt, size) {
 }
 
 function showSpinner() {
-  document.querySelector('.spinner').classList.add('show');
+ document.querySelector('.loader').classList.add('show');
 }
 
 function removeSpinner() {
-  document.querySelector('.spinner').classList.remove('show');
+  document.querySelector('.loader').classList.remove('show');
 }
 
 document.querySelector('#image-form').addEventListener('submit', onSubmit);
